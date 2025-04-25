@@ -11,6 +11,7 @@ import 'package:gowri_seva_sangam/Screen/login/Controller/controller.dart';
 
 
 //////************************************** CommonComponent for the EveryPage **************************************//////
+enum Menu { preview, share, getLink, remove, download }
 
 class CommonScaffoldWithAppBar extends StatelessWidget {
   final Widget body;
@@ -25,20 +26,20 @@ class CommonScaffoldWithAppBar extends StatelessWidget {
   final bool showEndDrawer;
 
 
-  CommonScaffoldWithAppBar({
-    super.key,
-    required this.body,
-    this.appBarBGColor,
-    this.leadingLink,
-    this.iconColor,
-    this.leadingChild,
-    this.titleChild,
-    this.actionsWidget,
-    this.centerTitle,
-    this.floatingActionButtonWidget,
-    this.showLeadingDrawer = true,
-    this.showEndDrawer = false
-  });
+CommonScaffoldWithAppBar({
+  super.key,
+  required this.body,
+  this.appBarBGColor,
+  this.leadingLink,
+  this.iconColor,
+  this.leadingChild,
+  this.titleChild,
+  this.actionsWidget,
+  this.centerTitle,
+  this.floatingActionButtonWidget,
+  this.showLeadingDrawer = true,
+  this.showEndDrawer = false
+});
 
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
   final loginController = Get.put(LoginController());
@@ -128,36 +129,86 @@ class CommonScaffoldWithAppBar extends StatelessWidget {
               NotificationPopup(),
               SizedBox(width: 10.0),
               IconButton(onPressed: () => showTopDialog(context), icon: Icon(Icons.logout)),
-              PopupMenuButton(
-                icon: Icon(Icons.account_circle_sharp),
-                color: Colors.white,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(8),
-                ),
-                elevation: 2,
-                offset: Offset(0, 60),
-                itemBuilder: (context) {
-                return [
-                  PopupMenuItem(
-                    value: 1,
-                    child: Text('Profile'),
-                    onTap: () {
-                      Get.toNamed('/responsiveProfileScreen');
-                    },
-                  ),
-                  PopupMenuItem(
-                    value: 2,
-                    child: Text('Settings'),
-                  ),
-                  PopupMenuItem(
-                    value: 3,
-                    child: Text('Logout'),
-                    onTap: () {
-                      showTopDialog(context);
-                    },
-                  ),
-                ];
-              }),
+              // PopupMenuButton(
+              //   icon: Icon(Icons.account_circle_sharp),
+              //   color: Colors.white,
+              //   shape: RoundedRectangleBorder(
+              //     borderRadius: BorderRadius.circular(8),
+              //   ),
+              //   elevation: 2,
+              //   offset: Offset(0, 60),
+              //   itemBuilder: (context) {
+              //   return [
+              //     PopupMenuItem(
+              //       value: 1,
+              //       child: Text('Profile'),
+              //       onTap: () {
+              //         Get.toNamed('/responsiveProfileScreen');
+              //       },
+              //     ),
+              //     PopupMenuItem(
+              //       value: 2,
+              //       child: Text('Settings'),
+              //     ),
+              //     PopupMenuItem(
+              //       value: 3,
+              //       child: Text('Logout'),
+              //       onTap: () {
+              //         showTopDialog(context);
+              //       },
+              //     ),
+              //   ];
+              // }),
+              PopupMenuButton<Menu>(
+                // offset: Offset(30, 40),
+                      // popUpAnimationStyle: _animationStyle,
+                      icon: const Icon(Icons.more_rounded),
+                      onSelected: (Menu item) {},
+                      itemBuilder: (BuildContext context) => <PopupMenuEntry<Menu>>[
+                        PopupMenuItem<Menu>(
+                          value: Menu.preview,
+                          child: ListTile(
+                            leading: Icon(Icons.visibility_outlined),
+                            title: Text('Profile'),
+                            onTap: () {
+                              Get.toNamed('/responsiveProfileScreen');
+                            },
+                          ),
+                        ),
+                        const PopupMenuItem<Menu>(
+                          value: Menu.share,
+                          child: ListTile(
+                            leading: Icon(Icons.share_outlined),
+                            title: Text('Settings'),
+                          ),
+                        ),
+                        PopupMenuItem<Menu>(
+                          value: Menu.getLink,
+                          child: ListTile(
+                            leading: Icon(Icons.link_outlined),
+                            title: Text('Logout'),
+                            onTap: () {
+                              showTopDialog(context);
+                            },
+                          ),
+                        ),
+                        // const PopupMenuDivider(),
+                        // const PopupMenuItem<Menu>(
+                        //   value: Menu.remove,
+                        //   child: ListTile(
+                        //     leading: Icon(Icons.delete_outline),
+                        //     title: Text('Remove'),
+                        //   ),
+                        // ),
+                        // const PopupMenuItem<Menu>(
+                        //   value: Menu.download,
+                        //   child: ListTile(
+                        //     leading: Icon(Icons.download_outlined),
+                        //     title: Text('Download'),
+                        //   ),
+                        // ),
+                      ],
+                    ),
               SizedBox(width: isLargeScreen ? 30 : 10),
 
               /////   Code for the Right side drawer Already given the bool value if we giv ethe bool value is enough

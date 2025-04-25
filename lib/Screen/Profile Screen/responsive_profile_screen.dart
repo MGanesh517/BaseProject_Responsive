@@ -38,6 +38,7 @@ class _ResponsiveProfileScreenState extends State<ResponsiveProfileScreen> {
   Widget build(BuildContext context) {
     final isMobile = MediaQuery.of(context).size.width < 600;
     final isTablet = MediaQuery.of(context).size.width <= 900;
+    final isDesktop = MediaQuery.of(context).size.width > 900;
 
     return CommonScaffoldWithAppBar(
       body: SafeArea(
@@ -47,114 +48,117 @@ class _ResponsiveProfileScreenState extends State<ResponsiveProfileScreen> {
             child: Column(
               children: [
                 // Profile card with background image and avatar
-                Stack(
-                  clipBehavior: Clip.none,
-                  alignment: Alignment.center,
-                  children: [
-                    // Container combining background image and info card
-                    Container(
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(12),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.black.withOpacity(0.05),
-                            blurRadius: 4,
-                            spreadRadius: 1,
-                          ),
-                        ],
-                      ),
-                      child: Column(
-                        children: [
-                          // Background Image
-                          ClipRRect(
-                            borderRadius: const BorderRadius.only(
-                              topLeft: Radius.circular(12),
-                              topRight: Radius.circular(12),
-                            ),
-                            child: Image.asset(
-                              'assets/developer.png',
-                              width: double.infinity,
-                              height: 150,
-                              fit: BoxFit.cover,
-                            ),
-                          ),
-                          
-                          // Info Card - Directly below background with no gap
-                          Container(
-                            decoration: const BoxDecoration(
-                              color: Colors.white,
-                              borderRadius: BorderRadius.only(
-                                bottomLeft: Radius.circular(12),
-                                bottomRight: Radius.circular(12),
-                              ),
-                            ),
-                            padding: const EdgeInsets.only(
-                              left: 16,
-                              right: 16,
-                              bottom: 20,
-                              top: 50,
-                            ),
-                            child: ResponsiveRowColumn(
-                              layout: isMobile
-                                  ? ResponsiveRowColumnType.COLUMN
-                                  : ResponsiveRowColumnType.ROW,
-                              rowCrossAxisAlignment: CrossAxisAlignment.center,
-                              rowMainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                              columnSpacing: 16,
-                              rowSpacing: 32,
-                              children: [
-                                ResponsiveRowColumnItem(
-                                  child: infoTile(Icons.person, "Name", "Christina"),
-                                ),
-                                ResponsiveRowColumnItem(
-                                  child: infoTile(Icons.mail, "Email", "Christina.love@gmail.com"),
-                                ),
-                                ResponsiveRowColumnItem(
-                                  child: infoTile(Icons.phone, "Mobile", "9143143143"),
-                                ),
-                              ],
-                            ),
-                            // child: ResponsiveRow(
-                            //   columns: [
-                            //   ResponsiveColumn(ResponsiveConstants().buttonBreakpoints, child: ResponsiveRowColumnItem(
-                            //       child: infoTile(Icons.person, "Name", "Christina"),
-                            //     ),),
-                            //     ResponsiveColumn(ResponsiveConstants().buttonBreakpoints, child: ResponsiveRowColumnItem(
-                            //       child: infoTile(Icons.mail, "Email", "Christina.love@gmail.com"),
-                            //     ),),
-                            //     ResponsiveColumn(ResponsiveConstants().buttonBreakpoints, child: ResponsiveRowColumnItem(
-                            //       child: infoTile(Icons.phone, "Mobile", "9143143143"),
-                            //     ),),
-                            // ]),
-                          ),
-                        ],
-                      ),
-                    ),
-                    
-                    // Avatar positioned to overlap both background and info card
-                    Positioned(
-                      left: 20,
-                      top: 110,
-                      child: Container(
+                Visibility(
+                  visible: isMobile || isTablet,
+                  child: Stack(
+                    clipBehavior: Clip.none,
+                    alignment: Alignment.center,
+                    children: [
+                      // Container combining background image and info card
+                      Container(
                         decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          border: Border.all(color: Colors.white, width: 4),
+                          borderRadius: BorderRadius.circular(12),
                           boxShadow: [
                             BoxShadow(
-                              color: Colors.black.withOpacity(0.1),
+                              color: Colors.black.withOpacity(0.05),
                               blurRadius: 4,
                               spreadRadius: 1,
                             ),
                           ],
                         ),
-                        child: CircleAvatar(
-                          radius: 40,
-                          backgroundColor: Colors.grey.shade200,
-                          backgroundImage: const AssetImage('assets/svg_icons/dummy_image.jpeg'),
+                        child: Column(
+                          children: [
+                            // Background Image
+                            ClipRRect(
+                              borderRadius: const BorderRadius.only(
+                                topLeft: Radius.circular(12),
+                                topRight: Radius.circular(12),
+                              ),
+                              child: Image.asset(
+                                'assets/developer.png',
+                                width: double.infinity,
+                                height: 150,
+                                fit: BoxFit.cover,
+                              ),
+                            ),
+                            
+                            // Info Card - Directly below background with no gap
+                            Container(
+                              decoration: const BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.only(
+                                  bottomLeft: Radius.circular(12),
+                                  bottomRight: Radius.circular(12),
+                                ),
+                              ),
+                              padding: const EdgeInsets.only(
+                                left: 16,
+                                right: 16,
+                                bottom: 20,
+                                top: 50,
+                              ),
+                              child: ResponsiveRowColumn(
+                                layout: isMobile
+                                    ? ResponsiveRowColumnType.COLUMN
+                                    : ResponsiveRowColumnType.ROW,
+                                rowCrossAxisAlignment: CrossAxisAlignment.center,
+                                rowMainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                columnSpacing: 16,
+                                rowSpacing: 32,
+                                children: [
+                                  ResponsiveRowColumnItem(
+                                    child: infoTile(Icons.person, "Name", "Christina"),
+                                  ),
+                                  ResponsiveRowColumnItem(
+                                    child: infoTile(Icons.mail, "Email", "Christina.love@gmail.com"),
+                                  ),
+                                  ResponsiveRowColumnItem(
+                                    child: infoTile(Icons.phone, "Mobile", "9143143143"),
+                                  ),
+                                ],
+                              ),
+                              // child: ResponsiveRow(
+                              //   columns: [
+                              //   ResponsiveColumn(ResponsiveConstants().buttonBreakpoints, child: ResponsiveRowColumnItem(
+                              //       child: infoTile(Icons.person, "Name", "Christina"),
+                              //     ),),
+                              //     ResponsiveColumn(ResponsiveConstants().buttonBreakpoints, child: ResponsiveRowColumnItem(
+                              //       child: infoTile(Icons.mail, "Email", "Christina.love@gmail.com"),
+                              //     ),),
+                              //     ResponsiveColumn(ResponsiveConstants().buttonBreakpoints, child: ResponsiveRowColumnItem(
+                              //       child: infoTile(Icons.phone, "Mobile", "9143143143"),
+                              //     ),),
+                              // ]),
+                            ),
+                          ],
                         ),
                       ),
-                    ),
-                  ],
+                      
+                      // Avatar positioned to overlap both background and info card
+                      Positioned(
+                        left: 20,
+                        top: 110,
+                        child: Container(
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            border: Border.all(color: Colors.white, width: 4),
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.black.withOpacity(0.1),
+                                blurRadius: 4,
+                                spreadRadius: 1,
+                              ),
+                            ],
+                          ),
+                          child: CircleAvatar(
+                            radius: 40,
+                            backgroundColor: Colors.grey.shade200,
+                            backgroundImage: const AssetImage('assets/svg_icons/dummy_image.jpeg'),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
                 
                 const SizedBox(height: 16),
