@@ -90,18 +90,17 @@ class _PopUpMultiSelectState extends State<PopUpMultiSelect> {
                 return ListView.builder(
                   itemCount: unselected.length,
                   itemBuilder: (context, index) {
-                    final member = unselected[index];
                     return Card(
                       child: ListTile(
-                        title: Text(member),
+                        title: Text(unselected[index]),
                         trailing: Checkbox(
-                          value: tempSelected.contains(member),
+                          value: tempSelected.contains(unselected[index]),
                           onChanged: (bool? checked) {
                             setState(() {
                               if (checked == true) {
-                                tempSelected.add(member);
+                                tempSelected.add(unselected[index]);
                               } else {
-                                tempSelected.remove(member);
+                                tempSelected.remove(unselected[index]);
                               }
                             });
                           },
@@ -127,7 +126,7 @@ class _PopUpMultiSelectState extends State<PopUpMultiSelect> {
               },
               child: const Text("Add Selected"),
             ),
-          ],
+          ],  
         );
       },
     );
